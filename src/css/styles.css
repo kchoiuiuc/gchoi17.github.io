@@ -1,0 +1,23 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:500&display=swap");
+body {
+  font-family: "Roboto", sans-serif;
+  font-weight: normal; }
+
+.navbar-brand {
+  font-size: 25px; }
+
+.navbar {
+  margin-bottom: 0px; }
+
+.jumbotron {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  background-color: #111b59;
+  color: white; }
+
+.jumbotron h1 {
+  position: relative;
+  display: block;
+  font-weight: bold;
+  font-size: 40px;
+  text-align: left; }
