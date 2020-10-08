@@ -15,7 +15,7 @@ function style() {
 function watch() {
   browserSync.init({
       server: {
-         baseDir: "./src",
+         baseDir: "./",
          index: "/index.html"
       }
   });
