@@ -7,12 +7,12 @@ var sass = require("gulp-sass");
 // Compile sass into CSS & auto-inject into browsers
 gulp.task("sass", function()
 {
-  return gulp.src(["node_modules/bootstrap/scss/bootstrap.scss", "src/scss/*.scss"])
+  return gulp.src(["src/scss/**/*.scss"])
   .pipe(sass())
   .pipe(gulp.dest("src/css"))
   .pipe(browserSync.stream());
 });
- 
+exports.style=style;
 // Move the javascript files into our /src/js folder
 gulp.task("js", function()
 {
