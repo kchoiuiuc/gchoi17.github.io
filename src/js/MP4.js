@@ -478,7 +478,8 @@ function setGouraudShader() {
  * Startup function called from html code to start program.
  */
  function startup() {
-  canvas = document.getElementById("myGLCanvas");
+  canvas = document.getElementById('responsive-canvas');
+  canvas.height = canvas.width;
   // Initial Balls Number
   BallsNumber = 5;
   AddBalls(BallsNumber);
