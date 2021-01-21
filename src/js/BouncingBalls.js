@@ -45,9 +45,9 @@ var Balls = [];
 var Grav = -9.8 / 3000;
 
 /** @global Friction values for each axis */
-var xFriction = 1.001;
-var yFriction = 1.001;
-var zFriction = 1.001;
+var xFriction = 1.0005;
+var yFriction = 1.0005;
+var zFriction = 1.0005;
 
 /** @global Box dimensions (2*xWidth * 2*yWidth * 2*zWidth) */
 var xWidth = 30;
@@ -72,8 +72,8 @@ var curKeys = {};
  */
 function SetBallsPositions () {
   x = Math.floor(((Math.random() - 0.5) * xWidth * 2));
-  // y position is set to be higher than 0 to show bouncing
-  y = Math.floor((Math.random() * yWidth) + yWidth);
+  // y position is set to be the highest to show the bounciness
+  y = yWidth;
   z = Math.floor(((Math.random() - 0.5) * zWidth * 2));
   return [x,y,z];
 }
@@ -93,11 +93,11 @@ function Ball () {
   var R = Math.random();
   var G = Math.random();
   var B = Math.random();
-  // S (Shininess) is in [0:100] unlike RGB
-  var S = Math.floor(Math.random() * 100);
+  // S (Shininess) is in [50:100] unlike RGB
+  var S = Math.floor(Math.random() * 100) * .5 + 50;
   this.Color = [R, G, B, S];
-  // Reflectivity is set to be higher than 0.5 to show bouncing
-  this.Reflectivity = Math.random() * 0.5 + 0.5;
+  // Reflectivity is set to be higher than 0.5 to show bounciness
+  this.Reflectivity = Math.random() * .5 + .5;
 }
 
 //----------------------------------------------------------------------------------
@@ -400,8 +400,11 @@ function setupBuffers() {
 var aFlag = false;
 var rFlag = false;
 
-function draw () { 
-    gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
+function draw() { 
+    gl.canvas.width = window.innerWidth * .8;
+    gl.canvas.height = window.innerHeight * .8;
+    xWidth = yWidth * gl.canvas.width / gl.canvas.height;
+    gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
     // We'll use perspective 
@@ -417,9 +420,9 @@ function draw () {
     // Add a ball on 'a'
     if (curKeys['a'] && !aFlag) aFlag = true;
     if (!curKeys['a'] && aFlag) {
-      BallsNumber += 5;
-      AddBalls(5);
-      console.log("5 Balls added");
+      BallsNumber += 20;
+      AddBalls(20);
+      console.log("20 Balls added");
       aFlag = false;
     }
     // Reset Balls on 'r'
@@ -478,10 +481,9 @@ function setGouraudShader() {
  * Startup function called from html code to start program.
  */
  function startup() {
-  canvas = document.getElementById('responsive-canvas');
-  canvas.height = canvas.width;
+  canvas = document.getElementById('BBCanvas');
   // Initial Balls Number
-  BallsNumber = 5;
+  BallsNumber = 20;
   AddBalls(BallsNumber);
   gl = createGLContext(canvas);
   gl.clearColor(0.0, 0.0, 0.0, 1.0);
@@ -500,7 +502,7 @@ function setGouraudShader() {
  */
 function tick() {
   requestAnimationFrame(tick);
-  draw ();
+  draw();
 }
 
 /**
